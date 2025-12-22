@@ -1,5 +1,6 @@
 ---
 import IconSlider from "./IconSlider.astro";
+import RotatingBackground from "./RotatingBackground.astro";
 
 // Heart SVG for separators
 const HeartSeparator = `
@@ -12,6 +13,9 @@ const HeartSeparator = `
 <section id="lineup" class="lineup-section">
     <!-- Top Slider (Left to Right) -->
     <IconSlider direction="right" />
+
+    <!-- Rotating Background -->
+    <RotatingBackground />
 
     <!-- Animated Lines Background -->
     <div class="animated-lines">
@@ -152,25 +156,52 @@ const HeartSeparator = `
         // Hearts animation on artist hover
         const heartsContainer = document.querySelector(".hearts-container");
         artistLinks.forEach((link) => {
-            link.addEventListener("mouseenter", (e) => {
-                createHeart(e as MouseEvent, heartsContainer as HTMLElement);
+            // Spawn hearts continuously while hovering or just a burst on enter
+            link.addEventListener("mouseenter", () => {
+                // Create a burst of hearts throughout the viewport
+                for (let i = 0; i < 5; i++) {
+                    createRandomHeart(heartsContainer as HTMLElement);
+                }
+            });
+
+            // Also add some random hearts while moving mouse over name
+            link.addEventListener("mousemove", () => {
+                if (Math.random() > 0.7) {
+                    // Rate limiter
+                    createRandomHeart(heartsContainer as HTMLElement);
+                }
             });
         });
     });
 
-    function createHeart(e: MouseEvent, container: HTMLElement) {
+    function createRandomHeart(container: HTMLElement) {
         const heart = document.createElement("div");
         heart.classList.add("heart");
         heart.textContent = "♥";
-        heart.style.left = `${e.clientX}px`;
-        heart.style.top = `${e.clientY}px`;
+
+        // Random position in viewport
+        const x = Math.random() * window.innerWidth;
+        const y = Math.random() * window.innerHeight;
+
+        heart.style.left = `${x}px`;
+        heart.style.top = `${y}px`;
+
+        // Random size
+        const size = 1 + Math.random() * 2; // 1rem to 3rem
+        heart.style.fontSize = `${size}rem`;
+
         heart.style.color = getRandomDangoColor();
         container.appendChild(heart);
 
+        // Random float direction
+        const xMove = (Math.random() - 0.5) * 100;
+
         gsap.to(heart, {
-            y: -100,
+            y: -100 - Math.random() * 100,
+            x: xMove,
             opacity: 0,
-            duration: 1.5,
+            rotation: Math.random() * 90 - 45,
+            duration: 1 + Math.random() * 2,
             ease: "power2.out",
             onComplete: () => heart.remove(),
         });
