@@ -1,0 +1,254 @@
+---
+import IconSlider from "./IconSlider.astro";
+
+const artists = [
+    { name: "EL BOGUETO", social: "#", featured: true },
+    { name: "LITTLE JESUS", social: "#", featured: true },
+    { name: "ODISSEO", social: "#", accent: true },
+    { name: "CACHIROLA", social: "#" },
+    { name: "KINKY", social: "#" },
+    { name: "LOOJAN", social: "#" },
+    { name: "JAVIER BLAKE", social: "#" },
+    { name: "YEYO", social: "#" },
+    { name: "DOONY GRAFF", social: "#" },
+    { name: "ALANIS YUKI", social: "#" },
+    { name: "PLASTIKBOY", social: "#" },
+    { name: "DENNA LA PORRI", social: "#" },
+];
+---
+
+<section id="lineup" class="lineup-section">
+    <!-- Top Slider (Left to Right) -->
+    <IconSlider direction="right" />
+
+    <!-- Animated Lines Background -->
+    <div class="animated-lines">
+        <div class="line line-1"></div>
+        <div class="line line-2"></div>
+        <div class="line line-3"></div>
+    </div>
+
+    <!-- Hearts Container -->
+    <div class="hearts-container"></div>
+
+    <!-- Artist Grid -->
+    <div class="container mx-auto px-4 py-20 relative z-10">
+        <h2
+            class="text-6xl md:text-8xl font-bold text-white text-center mb-16 font-kismis"
+        >
+            LINE UP
+        </h2>
+
+        <div class="artists-grid">
+            {
+                artists.map((artist) => (
+                    <a
+                        href={artist.social}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class={`artist-name text-artist hover-artist ${artist.featured ? "featured" : ""} ${artist.accent ? "accent" : ""}`}
+                        data-artist={artist.name}
+                    >
+                        {artist.name}
+                    </a>
+                ))
+            }
+        </div>
+
+        <!-- CTA Button -->
+        <div class="text-center mt-16">
+            <a
+                href="https://arema.mx/dango-festival"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="cta-button"
+            >
+                COMPRA TUS BOLETOS
+            </a>
+        </div>
+    </div>
+
+    <!-- Bottom Slider (Right to Left) -->
+    <IconSlider direction="left" />
+</section>
+
+<script>
+    import { gsap } from "gsap";
+    import { getRandomDangoColor } from "../utils/colorUtils";
+
+    document.addEventListener("astro:page-load", () => {
+        // Random color hover for artists
+        const artistLinks = document.querySelectorAll(".hover-artist");
+        artistLinks.forEach((link) => {
+            link.addEventListener("mouseenter", () => {
+                (link as HTMLElement).style.color = getRandomDangoColor();
+            });
+
+            link.addEventListener("mouseleave", () => {
+                (link as HTMLElement).style.color = "";
+            });
+        });
+
+        // Animated lines
+        const lines = document.querySelectorAll(".line");
+        lines.forEach((line, i) => {
+            gsap.to(line, {
+                opacity: 0.3 + i * 0.2,
+                duration: 2 + i * 0.5,
+                repeat: -1,
+                yoyo: true,
+                ease: "power1.inOut",
+            });
+        });
+
+        // Hearts animation on artist hover
+        const heartsContainer = document.querySelector(".hearts-container");
+        artistLinks.forEach((link) => {
+            link.addEventListener("mouseenter", (e) => {
+                createHeart(e as MouseEvent, heartsContainer as HTMLElement);
+            });
+        });
+    });
+
+    function createHeart(e: MouseEvent, container: HTMLElement) {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.textContent = "♥";
+        heart.style.left = `${e.clientX}px`;
+        heart.style.top = `${e.clientY}px`;
+        heart.style.color = getRandomDangoColor();
+        container.appendChild(heart);
+
+        gsap.to(heart, {
+            y: -100,
+            opacity: 0,
+            duration: 1.5,
+            ease: "power2.out",
+            onComplete: () => heart.remove(),
+        });
+    }
+</script>
+
+<style>
+    .lineup-section {
+        min-height: 100vh;
+        background: #000;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .animated-lines {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .line {
+        position: absolute;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(
+            90deg,
+            var(--color-dango-pink),
+            var(--color-dango-orange),
+            var(--color-dango-yellow),
+            var(--color-dango-cyan)
+        );
+        opacity: 0.2;
+    }
+
+    .line-1 {
+        top: 20%;
+    }
+    .line-2 {
+        top: 50%;
+    }
+    .line-3 {
+        top: 80%;
+    }
+
+    .hearts-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 100;
+    }
+
+    .heart {
+        position: absolute;
+        font-size: 2rem;
+        pointer-events: none;
+    }
+
+    .artists-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .artist-name {
+        display: block;
+        text-align: center;
+        font-size: 2rem;
+        font-weight: bold;
+        color: #fff;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+        letter-spacing: 0.05em;
+        padding: 1rem;
+    }
+
+    .artist-name.featured {
+        font-size: 3rem;
+    }
+
+    .artist-name.accent {
+        color: var(--color-dango-orange);
+    }
+
+    .artist-name:hover {
+        transform: scale(1.1);
+    }
+
+    .cta-button {
+        display: inline-block;
+        padding: 1rem 3rem;
+        background: linear-gradient(
+            135deg,
+            var(--color-dango-pink),
+            var(--color-dango-purple)
+        );
+        color: white;
+        font-family: var(--font-kismis);
+        font-size: 1.25rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        letter-spacing: 0.1em;
+    }
+
+    .cta-button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 40px rgba(255, 20, 147, 0.5);
+    }
+
+    @media (max-width: 768px) {
+        .artist-name {
+            font-size: 1.5rem;
+        }
+
+        .artist-name.featured {
+            font-size: 2rem;
+        }
+    }
+</style>

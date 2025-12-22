@@ -1,10 +1,70 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Hero from "../components/Hero.astro";
+import Navbar from "../components/Navbar.astro";
+import VideoBackground from "../components/VideoBackground.astro";
+import DualLogos from "../components/DualLogos.astro";
+import LineUp from "../components/LineUp.astro";
 ---
 
-<Layout title="Konpo Template | Astro">
-	<main>
-		<Hero />
-	</main>
+<Layout title="Dängo Festival 2026 | Teotihuacán">
+	<Navbar />
+
+	<!-- 1_P Mainscreen -->
+	<VideoBackground>
+		<DualLogos />
+	</VideoBackground>
+
+	<!-- Placeholder Sections -->
+	<section
+		id="boletos"
+		class="min-h-screen bg-black flex items-center justify-center"
+	>
+		<div class="container mx-auto px-4 py-20 text-center">
+			<h2 class="text-6xl font-bold text-white mb-4">Boletos</h2>
+			<p class="text-xl text-gray-400">Próximamente</p>
+		</div>
+	</section>
+
+	<!-- 2_L Line Up -->
+	<LineUp />
+
+	<section
+		id="ubicacion"
+		class="min-h-screen bg-black flex items-center justify-center"
+	>
+		<div class="container mx-auto px-4 py-20 text-center">
+			<h2 class="text-6xl font-bold text-white mb-4">Ubicación</h2>
+			<p class="text-xl text-gray-400">Próximamente</p>
+		</div>
+	</section>
+
+	<section
+		id="informacion"
+		class="min-h-screen bg-black flex items-center justify-center"
+	>
+		<div class="container mx-auto px-4 py-20 text-center">
+			<h2 class="text-6xl font-bold text-white mb-4">Información</h2>
+			<p class="text-xl text-gray-400">Próximamente</p>
+		</div>
+	</section>
+
+	<section
+		id="playlist"
+		class="min-h-screen bg-black flex items-center justify-center"
+	>
+		<div class="container mx-auto px-4 py-20 text-center">
+			<h2 class="text-6xl font-bold text-white mb-4">Playlist</h2>
+			<p class="text-xl text-gray-400">Próximamente</p>
+		</div>
+	</section>
+
+	<section
+		id="galeria"
+		class="min-h-screen bg-black flex items-center justify-center"
+	>
+		<div class="container mx-auto px-4 py-20 text-center">
+			<h2 class="text-6xl font-bold text-white mb-4">Galería</h2>
+			<p class="text-xl text-gray-400">Próximamente</p>
+		</div>
+	</section>
 </Layout>
