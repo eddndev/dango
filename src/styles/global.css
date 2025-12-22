@@ -15,6 +15,15 @@
   --color-brand-dark: #0a0a0a;
   --color-brand-neon: #a855f7;
 
+  /* Dängo Festival Colors */
+  --color-dango-pink: #FF1493;
+  --color-dango-orange: #FF6B35;
+  --color-dango-yellow: #FFD93D;
+  --color-dango-cyan: #00CED1;
+  --color-dango-green: #39FF14;
+  --color-dango-blue: #0080FF;
+  --color-dango-red: #FF4500;
+
   --font-kismis: 'Kismis', sans-serif;
   --font-inter: 'Inter', sans-serif;
   --font-outfit: 'Outfit', sans-serif;
