@@ -1,0 +1,120 @@
+---
+interface Props {
+    primaryLogo?: string;
+    secondaryLogo?: string;
+    ticketsLink?: string;
+}
+
+const {
+    primaryLogo = "/images/logo-principal.png",
+    secondaryLogo = "/images/logo-secundario.png",
+    ticketsLink = "https://arema.mx/dango-festival",
+} = Astro.props;
+---
+
+<div class="dual-logos-container">
+    <div class="logos-wrapper">
+        <!-- Primary Logo -->
+        <img
+            src={primaryLogo}
+            alt="Dängo Festival 2026 Logo Principal"
+            class="logo logo-primary"
+        />
+
+        <!-- Secondary Logo with Link -->
+        <a
+            href={ticketsLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="logo-secondary-link"
+        >
+            <img
+                src={secondaryLogo}
+                alt="Compra Boletos"
+                class="logo logo-secondary"
+            />
+        </a>
+    </div>
+</div>
+
+<script>
+    import { getRandomDangoColor } from "../utils/colorUtils";
+
+    document.addEventListener("astro:page-load", () => {
+        const secondaryLink = document.querySelector(".logo-secondary-link");
+
+        if (secondaryLink) {
+            secondaryLink.addEventListener("mouseenter", () => {
+                const randomColor = getRandomDangoColor();
+                (secondaryLink as HTMLElement).style.filter = `
+          drop-shadow(0 0 20px ${randomColor})
+          brightness(1.2)
+        `;
+            });
+
+            secondaryLink.addEventListener("mouseleave", () => {
+                (secondaryLink as HTMLElement).style.filter = "";
+            });
+        }
+    });
+</script>
+
+<style>
+    .dual-logos-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .logos-wrapper {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .logo {
+        max-width: 600px;
+        width: 90vw;
+        height: auto;
+        transition: all 0.3s ease;
+    }
+
+    .logo-primary {
+        filter: drop-shadow(0 10px 30px rgba(255, 255, 255, 0.3));
+    }
+
+    .logo-secondary {
+        opacity: 0.7;
+        filter: drop-shadow(0 5px 15px rgba(255, 255, 255, 0.2));
+    }
+
+    .logo-secondary-link {
+        transition:
+            transform 0.3s ease,
+            filter 0.3s ease;
+        cursor: pointer;
+    }
+
+    .logo-secondary-link:hover {
+        transform: scale(1.05);
+    }
+
+    .logo-secondary-link:hover .logo-secondary {
+        opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+        .logo {
+            max-width: 400px;
+        }
+
+        .logos-wrapper {
+            gap: 1rem;
+        }
+    }
+</style>
