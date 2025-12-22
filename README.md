@@ -64,7 +64,7 @@ El sitio implementa el sistema de diseño **Konpo**, caracterizado por:
 
 ```bash
 # Clonar el repositorio
-git clone https://github.com/YOUR_USERNAME/dango-festival.git
+git clone https://github.com/sylestudio/dango-festival.git
 
 # Navegar al directorio
 cd dango-festival
@@ -136,21 +136,19 @@ El sitio será desplegado en:
 
 ---
 
-## 🤝 Contribuciones
+## 👨‍💻 Desarrollado por
 
-Las contribuciones son bienvenidas. Por favor:
+<div align="center">
 
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add: AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
+[![Syle Studio](./assets/logo.jpg)](https://sylestudio.com)
 
----
+**[Syle Studio](https://sylestudio.com)**
 
-## 📄 Licencia
+*Digital Agency especializada en experiencias web inmersivas*
 
-Este proyecto está bajo la Licencia MIT. Ver archivo `LICENSE` para más detalles.
+</div>
+
+Syle Studio es un estudio de diseño y desarrollo digital dedicado a crear experiencias web únicas que combinan estética moderna con tecnología de vanguardia.
 
 ---
 
