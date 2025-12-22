@@ -1,101 +1,120 @@
 ---
 interface Props {
-    direction?: "left" | "right";
-    speed?: number;
+  direction?: 'left' | 'right';
+  speed?: number;
 }
 
-const { direction = "left", speed = 30 } = Astro.props;
+const { direction = 'left', speed = 30 } = Astro.props;
 
 // Icon names M1.svg to M20.svg
 const iconNames = Array.from({ length: 20 }, (_, i) => `M${i + 1}.svg`);
+
+// Duplicate for seamless loop (4 sets to ensure viewport coverage)
+// Set 1: Initial view
+// Set 2: Seamless transition target
+// Set 3 & 4: Buffer for large screens
+const displayIcons = [...iconNames, ...iconNames, ...iconNames, ...iconNames];
 ---
 
 <div class="slider-container" data-direction={direction}>
-    <div class="slider-track">
-        {
-            iconNames.map((icon) => (
-                <div class="slider-item">
-                    <img
-                        src={`/icons/${icon}`}
-                        alt="Festival Icon"
-                        class="icon-img"
-                    />
-                </div>
-            ))
-        }
-        <!-- Duplicate for seamless loop -->
-        {
-            iconNames.map((icon) => (
-                <div class="slider-item">
-                    <img
-                        src={`/icons/${icon}`}
-                        alt="Festival Icon"
-                        class="icon-img"
-                    />
-                </div>
-            ))
-        }
-    </div>
+  <div class="slider-track">
+    {displayIcons.map((icon) => (
+      <div class="slider-item">
+        <img src={`/icons/${icon}`} alt="Festival Icon" class="icon-img" />
+      </div>
+    ))}
+  </div>
 </div>
 
 <script>
-    import { gsap } from "gsap";
+  import { gsap } from 'gsap';
 
-    document.addEventListener("astro:page-load", () => {
-        const sliders = document.querySelectorAll(".slider-container");
+  document.addEventListener('astro:page-load', () => {
+    initSliders();
+  });
 
-        sliders.forEach((container) => {
-            const direction = container.getAttribute("data-direction");
-            const track = container.querySelector(
-                ".slider-track",
-            ) as HTMLElement;
+  // Re-run on resize to recalculate widths
+  window.addEventListener('resize', () => {
+    initSliders();
+  });
 
-            if (!track) return;
-
-            const items = track.querySelectorAll(".slider-item");
-            const itemWidth = (items[0] as HTMLElement).offsetWidth;
-            const totalWidth = itemWidth * (items.length / 2); // Half because duplicated
-
-            gsap.to(track, {
-                x: direction === "left" ? -totalWidth : totalWidth,
-                duration: totalWidth / 30, // Adjust speed
-                ease: "none",
-                repeat: -1,
-                modifiers: {
-                    x: gsap.utils.unitize((x) => parseFloat(x) % totalWidth),
-                },
-            });
-        });
+  function initSliders() {
+    const sliders = document.querySelectorAll('.slider-container');
+    
+    sliders.forEach((container) => {
+      const direction = container.getAttribute('data-direction');
+      const track = container.querySelector('.slider-track') as HTMLElement;
+      
+      if (!track) return;
+      
+      // Kill existing tweens to prevent conflicts
+      gsap.killTweensOf(track);
+      
+      const items = track.querySelectorAll('.slider-item');
+      if (items.length === 0) return;
+      
+      // Calculate widths
+      // We have 4 identical sets. A seamless loop is traversing ONE set width.
+      const singleSetCount = items.length / 4;
+      const itemWidth = (items[0] as HTMLElement).getBoundingClientRect().width;
+      const singleSetWidth = itemWidth * singleSetCount;
+      
+      // Ensure smooth linear motion
+      // Left (-): Move from 0 to -singleSetWidth
+      // Right (+): Move from -singleSetWidth to 0
+      
+      if (direction === 'right') {
+        gsap.fromTo(track, 
+          { x: -singleSetWidth },
+          { 
+            x: 0, 
+            duration: singleSetWidth / 50, 
+            ease: 'none', 
+            repeat: -1 
+          }
+        );
+      } else {
+        gsap.fromTo(track, 
+          { x: 0 },
+          { 
+            x: -singleSetWidth, 
+            duration: singleSetWidth / 50, 
+            ease: 'none', 
+            repeat: -1 
+          }
+        );
+      }
     });
+  }
 </script>
 
 <style>
-    .slider-container {
-        width: 100%;
-        overflow: hidden;
-        position: relative;
-        height: 60px;
-        background: transparent;
-    }
+  .slider-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    height: 60px;
+    background: transparent;
+  }
 
-    .slider-track {
-        display: flex;
-        gap: 1rem;
-        will-change: transform;
-    }
+  .slider-track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+  }
 
-    .slider-item {
-        flex-shrink: 0;
-        width: 50px;
-        height: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+  .slider-item {
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-    .icon-img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-    }
+  .icon-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 </style>
