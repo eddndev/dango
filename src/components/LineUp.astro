@@ -1,20 +1,12 @@
 ---
 import IconSlider from "./IconSlider.astro";
 
-const artists = [
-    { name: "EL BOGUETO", social: "#", featured: true },
-    { name: "LITTLE JESUS", social: "#", featured: true },
-    { name: "ODISSEO", social: "#", accent: true },
-    { name: "CACHIROLA", social: "#" },
-    { name: "KINKY", social: "#" },
-    { name: "LOOJAN", social: "#" },
-    { name: "JAVIER BLAKE", social: "#" },
-    { name: "YEYO", social: "#" },
-    { name: "DOONY GRAFF", social: "#" },
-    { name: "ALANIS YUKI", social: "#" },
-    { name: "PLASTIKBOY", social: "#" },
-    { name: "DENNA LA PORRI", social: "#" },
-];
+// Heart SVG for separators
+const HeartSeparator = `
+<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="inline-block mx-4 heart-separator">
+  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+</svg>
+`;
 ---
 
 <section id="lineup" class="lineup-section">
@@ -28,31 +20,81 @@ const artists = [
         <div class="line line-3"></div>
     </div>
 
-    <!-- Hearts Container -->
+    <!-- Hearts Container for floating animation -->
     <div class="hearts-container"></div>
 
-    <!-- Artist Grid -->
-    <div class="container mx-auto px-4 py-20 relative z-10">
-        <h2
-            class="text-6xl md:text-8xl font-bold text-white text-center mb-16 font-kismis"
-        >
-            LINE UP
-        </h2>
+    <!-- Artist Layout -->
+    <div class="container mx-auto px-4 py-20 relative z-10 text-center">
+        <!-- Headliners -->
+        <div class="flex flex-col items-center gap-2 mb-4">
+            <a
+                href="#"
+                class="artist-name headline hover-artist"
+                data-artist="EL BOGUETO"
+            >
+                EL BOGUETO
+            </a>
+            <a
+                href="#"
+                class="artist-name headline hover-artist"
+                data-artist="LITTLE JESUS"
+            >
+                LITTLE JESUS
+            </a>
+        </div>
 
-        <div class="artists-grid">
-            {
-                artists.map((artist) => (
-                    <a
-                        href={artist.social}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class={`artist-name text-artist hover-artist ${artist.featured ? "featured" : ""} ${artist.accent ? "accent" : ""}`}
-                        data-artist={artist.name}
-                    >
-                        {artist.name}
-                    </a>
-                ))
-            }
+        <!-- Accent Artist -->
+        <div class="mb-8">
+            <a
+                href="#"
+                class="artist-name accent-headline hover-artist"
+                data-artist="ODISSEO"
+            >
+                ODISSEO
+            </a>
+        </div>
+
+        <!-- Paired Artists -->
+        <div class="flex flex-col gap-3 items-center justify-center">
+            <!-- Row 1 -->
+            <div class="artist-row">
+                <a href="#" class="artist-name mid hover-artist">CACHIRULA</a>
+                <span class="text-white" set:html={HeartSeparator} />
+                <a href="#" class="artist-name mid hover-artist">KINKY</a>
+            </div>
+
+            <!-- Row 2 -->
+            <div class="artist-row">
+                <a href="#" class="artist-name mid hover-artist">LOOJAN</a>
+                <span class="text-white" set:html={HeartSeparator} />
+                <a href="#" class="artist-name mid hover-artist">JAVIER BLAKE</a
+                >
+            </div>
+
+            <!-- Row 3 -->
+            <div class="artist-row">
+                <a href="#" class="artist-name mid hover-artist">YEYO</a>
+                <span class="text-white" set:html={HeartSeparator} />
+                <a href="#" class="artist-name mid hover-artist">DOONY GRAFF</a>
+            </div>
+
+            <!-- Row 4 -->
+            <div class="artist-row">
+                <a href="#" class="artist-name mid hover-artist">ALANIS YUKI</a>
+                <span class="text-white" set:html={HeartSeparator} />
+                <a href="#" class="artist-name mid hover-artist">PLASTIKBOY</a>
+            </div>
+        </div>
+
+        <!-- Bottom Artist -->
+        <div class="mt-8">
+            <a
+                href="#"
+                class="artist-name mid hover-artist"
+                data-artist="DENNA LA PORRI"
+            >
+                DENNA LA PORRI
+            </a>
         </div>
 
         <!-- CTA Button -->
@@ -85,7 +127,13 @@ const artists = [
             });
 
             link.addEventListener("mouseleave", () => {
-                (link as HTMLElement).style.color = "";
+                // Keep Odisseo accent color if not hovered, otherwise white
+                if (link.classList.contains("accent-headline")) {
+                    (link as HTMLElement).style.color =
+                        "var(--color-dango-orange)";
+                } else {
+                    (link as HTMLElement).style.color = "";
+                }
             });
         });
 
@@ -135,6 +183,9 @@ const artists = [
         background: #000;
         position: relative;
         overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
     .animated-lines {
@@ -187,36 +238,58 @@ const artists = [
         pointer-events: none;
     }
 
-    .artists-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
     .artist-name {
-        display: block;
-        text-align: center;
-        font-size: 2rem;
+        display: inline-block;
+        font-family: var(--font-kismis);
         font-weight: bold;
         color: #fff;
         text-transform: uppercase;
         transition: all 0.3s ease;
         letter-spacing: 0.05em;
-        padding: 1rem;
+        cursor: pointer;
+        line-height: 1;
     }
 
-    .artist-name.featured {
-        font-size: 3rem;
+    .headline {
+        font-size: 4rem; /* 64px */
     }
 
-    .artist-name.accent {
+    .accent-headline {
+        font-size: 5rem; /* 80px */
         color: var(--color-dango-orange);
+    }
+
+    .mid {
+        font-size: 2.25rem; /* 36px */
+    }
+
+    .artist-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
     }
 
     .artist-name:hover {
         transform: scale(1.1);
+    }
+
+    /* Heart separator animation */
+    .heart-separator {
+        animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.2);
+        }
+        100% {
+            transform: scale(1);
+        }
     }
 
     .cta-button {
@@ -243,12 +316,17 @@ const artists = [
     }
 
     @media (max-width: 768px) {
-        .artist-name {
+        .headline {
+            font-size: 2.5rem;
+        }
+        .accent-headline {
+            font-size: 3rem;
+        }
+        .mid {
             font-size: 1.5rem;
         }
-
-        .artist-name.featured {
-            font-size: 2rem;
+        .artist-row {
+            gap: 0.25rem;
         }
     }
 </style>
