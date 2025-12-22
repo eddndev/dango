@@ -179,18 +179,20 @@ const HeartSeparator = `
         heart.classList.add("heart");
         heart.textContent = "♥";
 
-        // Random position in viewport
+        // Random position in viewport (fixed container)
         const x = Math.random() * window.innerWidth;
         const y = Math.random() * window.innerHeight;
 
-        heart.style.left = `${x}px`;
-        heart.style.top = `${y}px`;
+        // Apply ALL positioning styles inline to ensure they take effect
+        heart.style.cssText = `
+          position: absolute;
+          left: ${x}px;
+          top: ${y}px;
+          font-size: ${1 + Math.random() * 2}rem;
+          color: ${getRandomDangoColor()};
+          pointer-events: none;
+        `;
 
-        // Random size
-        const size = 1 + Math.random() * 2; // 1rem to 3rem
-        heart.style.fontSize = `${size}rem`;
-
-        heart.style.color = getRandomDangoColor();
         container.appendChild(heart);
 
         // Random float direction
@@ -257,10 +259,11 @@ const HeartSeparator = `
         position: fixed;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
+        width: 100vw;
+        height: 100vh;
         pointer-events: none;
-        z-index: 100;
+        z-index: 9999;
+        overflow: hidden;
     }
 
     .heart {
