@@ -12,7 +12,9 @@ const HeartSeparator = `
 
 <section id="lineup" class="lineup-section">
     <!-- Top Slider (Left to Right) -->
-    <IconSlider direction="right" />
+    <div class="absolute top-0 w-full z-20">
+        <IconSlider direction="right" />
+    </div>
 
     <!-- Rotating Background -->
     <RotatingBackground />
@@ -21,7 +23,7 @@ const HeartSeparator = `
     <div class="hearts-container"></div>
 
     <!-- Artist Layout -->
-    <div class="container mx-auto px-4 py-20 relative z-10 text-center">
+    <div class="container mx-auto px-4 py-4 relative z-10 text-center">
         <!-- Headliners -->
         <div class="flex flex-col items-center gap-2 mb-4">
             <a
@@ -111,7 +113,9 @@ const HeartSeparator = `
     </div>
 
     <!-- Bottom Slider (Right to Left) -->
-    <IconSlider direction="left" />
+    <div class="absolute bottom-0 w-full z-20">
+        <IconSlider direction="left" />
+    </div>
 </section>
 
 <script>
@@ -196,7 +200,8 @@ const HeartSeparator = `
 
 <style>
     .lineup-section {
-        min-height: 100vh;
+        height: calc(100vh - var(--navbar-height));
+        scroll-margin-top: var(--navbar-height);
         background: #000;
         position: relative;
         overflow: hidden;
@@ -235,20 +240,20 @@ const HeartSeparator = `
     }
 
     .headline {
-        font-size: 4rem; /* 64px */
+        font-size: 2.5rem; /* 40px */
     }
 
     .accent-headline {
-        font-size: 5rem; /* 80px */
+        font-size: 3.5rem; /* 56px */
         color: var(--color-dango-orange);
     }
 
     .mid {
-        font-size: 2.25rem; /* 36px */
+        font-size: 1.5rem; /* 24px */
     }
 
     .small {
-        font-size: 1.75rem; /* 28px */
+        font-size: 1.15rem; /* ~18px */
     }
 
     .artist-row {

@@ -28,6 +28,8 @@
   --font-kismis: 'Kismis', sans-serif;
   --font-inter: 'Inter', sans-serif;
   --font-outfit: 'Outfit', sans-serif;
+
+  --navbar-height: 80px;
 }
 
 :root {
