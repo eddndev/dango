@@ -41,7 +41,7 @@ const HeartSeparator = `
         </div>
 
         <!-- Accent Artist -->
-        <div class="mb-8">
+        <div class="mb-4">
             <a
                 href="#"
                 class="artist-name accent-headline hover-artist"
@@ -77,17 +77,20 @@ const HeartSeparator = `
 
             <!-- Row 4 -->
             <div class="artist-row">
-                <a href="#" class="artist-name mid hover-artist">ALANIS YUKI</a>
+                <a href="#" class="artist-name small hover-artist"
+                    >ALANIS YUKI</a
+                >
                 <span class="text-white" set:html={HeartSeparator} />
-                <a href="#" class="artist-name mid hover-artist">PLASTIKBOY</a>
+                <a href="#" class="artist-name small hover-artist">PLASTIKBOY</a
+                >
             </div>
         </div>
 
         <!-- Bottom Artist -->
-        <div class="mt-8">
+        <div class="mt-4">
             <a
                 href="#"
-                class="artist-name mid hover-artist"
+                class="artist-name small hover-artist"
                 data-artist="DENNA LA PORRI"
             >
                 DENNA LA PORRI
@@ -242,6 +245,10 @@ const HeartSeparator = `
 
     .mid {
         font-size: 2.25rem; /* 36px */
+    }
+
+    .small {
+        font-size: 1.75rem; /* 28px */
     }
 
     .artist-row {
