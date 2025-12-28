@@ -1,0 +1,92 @@
+---
+
+---
+
+<section id="noticias" class="news-section">
+    <div class="container mx-auto px-4 pt-20 pb-10">
+        <!-- Section Header -->
+        <div class="mb-8">
+            <h2 class="section-title">
+                ENTERATE DE TODAS <br />
+                <span class="text-white">NUESTRAS ULTIMAS NOTICIAS</span>
+            </h2>
+        </div>
+    </div>
+
+    <!-- News Grid: Full Width, No Gap -->
+    <div
+        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 w-full gap-0"
+    >
+        {
+            Array.from({ length: 6 }).map((_, i) => {
+                // Logic to hide orphans on specific breakpoints
+                // Item index 4 (5th item): Hide on md (4 cols) -> Show on lg (5 cols)
+                // Item index 5 (6th item): Hide on md (4 cols) & lg (5 cols) -> Show on xl (6 cols)
+                let visibilityClass = "block";
+                if (i === 4) visibilityClass = "block md:hidden lg:block";
+                if (i === 5)
+                    visibilityClass = "block md:hidden lg:hidden xl:block";
+
+                return (
+                    <div class={`news-item ${visibilityClass}`}>
+                        <div class="placeholder-img" />
+                    </div>
+                );
+            })
+        }
+    </div>
+</section>
+
+<style>
+    .news-section {
+        min-height: 50vh; /* Adjust as needed, doesn't need to be full screen necessarily */
+        background-color: #000;
+        color: white;
+    }
+
+    .section-title {
+        font-family: var(--font-kismis);
+        font-size: clamp(2rem, 5vw, 4rem);
+        line-height: 1;
+        color: var(--color-dango-purple); /* Or specific color from design */
+        text-transform: uppercase;
+    }
+
+    .section-title span {
+        color: #fff;
+    }
+
+    .news-item {
+        aspect-ratio: 9 / 16; /* Taller vertical format (Story style) */
+        width: 100%;
+        background-color: #1a1a1a;
+        overflow: hidden;
+        /* Border removed for seamless look or keep strictly if "instagram style" implies separation? "No debe haber gap" implies seamless */
+        position: relative;
+    }
+
+    .placeholder-img {
+        width: 100%;
+        height: 100%;
+        background-color: #222;
+        background-image: url('data:image/svg+xml,%3Csvg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%23333" fill-rule="evenodd"%3E%3Cpath d="M0 40L40 0H20L0 20M40 40V20L20 40"/%3E%3C/g%3E%3C/svg%3E');
+        transition: transform 0.3s ease;
+    }
+
+    .news-item:hover .placeholder-img {
+        transform: scale(1.05);
+    }
+
+    /* Optional: Label for development visibility */
+    .news-item::after {
+        content: "Noticia";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #555;
+        font-family: var(--font-outfit);
+        font-size: 1rem;
+        pointer-events: none;
+    }
+</style>

@@ -5,6 +5,8 @@ import VideoBackground from "../components/VideoBackground.astro";
 import DualLogos from "../components/DualLogos.astro";
 import LineUp from "../components/LineUp.astro";
 import Tickets from "../components/Tickets.astro";
+import Gallery from "../components/Gallery.astro";
+import News from "../components/News.astro";
 ---
 
 <Layout title="Dängo Festival 2026 | Teotihuacán">
@@ -31,15 +33,7 @@ import Tickets from "../components/Tickets.astro";
 		</div>
 	</section>
 
-	<section
-		id="informacion"
-		class="min-h-screen bg-black flex items-center justify-center"
-	>
-		<div class="container mx-auto px-4 py-20 text-center">
-			<h2 class="text-6xl font-bold text-white mb-4">Información</h2>
-			<p class="text-xl text-gray-400">Próximamente</p>
-		</div>
-	</section>
+	<News />
 
 	<section
 		id="playlist"
@@ -51,13 +45,5 @@ import Tickets from "../components/Tickets.astro";
 		</div>
 	</section>
 
-	<section
-		id="galeria"
-		class="min-h-screen bg-black flex items-center justify-center"
-	>
-		<div class="container mx-auto px-4 py-20 text-center">
-			<h2 class="text-6xl font-bold text-white mb-4">Galería</h2>
-			<p class="text-xl text-gray-400">Próximamente</p>
-		</div>
-	</section>
+	<Gallery />
 </Layout>
