@@ -4,7 +4,7 @@ import RotatingBackground from "./RotatingBackground.astro";
 
 // Heart SVG for separators
 const HeartSeparator = `
-<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="inline-block mx-4 heart-separator">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="inline-block mx-4 heart-separator">
   <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
 </svg>
 `;
@@ -59,6 +59,7 @@ const HeartSeparator = `
             <div class="artist-row">
                 <a href="#" class="artist-name mid hover-artist">CACHIRULA</a>
                 <span class="text-white" set:html={HeartSeparator} />
+                <span class="text-white" set:html={HeartSeparator} />
                 <a href="#" class="artist-name mid hover-artist">KINKY</a>
             </div>
 
@@ -79,11 +80,12 @@ const HeartSeparator = `
 
             <!-- Row 4 -->
             <div class="artist-row">
-                <a href="#" class="artist-name small hover-artist"
+                <a href="#" class="artist-name text-[22px] hover-artist"
                     >ALANIS YUKI</a
                 >
                 <span class="text-white" set:html={HeartSeparator} />
-                <a href="#" class="artist-name small hover-artist">PLASTIKBOY</a
+                <a href="#" class="artist-name text-[22px] hover-artist"
+                    >PLASTIKBOY</a
                 >
             </div>
         </div>
@@ -92,7 +94,7 @@ const HeartSeparator = `
         <div class="mt-4">
             <a
                 href="#"
-                class="artist-name small hover-artist"
+                class="artist-name text-[22px] hover-artist"
                 data-artist="DENNA LA PORRI"
             >
                 DENNA LA PORRI
@@ -100,7 +102,7 @@ const HeartSeparator = `
         </div>
 
         <!-- CTA Button -->
-        <div class="text-left mt-16">
+        <div class="absolute bottom-8 left-4 text-left z-30 hidden md:block">
             <a
                 href="https://arema.mx/dango-festival"
                 target="_blank"
@@ -240,20 +242,20 @@ const HeartSeparator = `
     }
 
     .headline {
-        font-size: 2.5rem; /* 40px */
+        font-size: 4rem; /* 64px */
     }
 
     .accent-headline {
-        font-size: 3.5rem; /* 56px */
+        font-size: 5rem; /* 80px */
         color: var(--color-dango-orange);
     }
 
     .mid {
-        font-size: 1.5rem; /* 24px */
+        font-size: 2.25rem; /* 36px */
     }
 
     .small {
-        font-size: 1.15rem; /* ~18px */
+        font-size: 1.75rem; /* 28px */
     }
 
     .artist-row {
