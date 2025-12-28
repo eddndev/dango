@@ -29,6 +29,7 @@ const HeartSeparator = `
             <a
                 href="#"
                 class="artist-name headline hover-artist"
+                id="el-bogueto"
                 data-artist="EL BOGUETO"
             >
                 EL BOGUETO
@@ -36,6 +37,7 @@ const HeartSeparator = `
             <a
                 href="#"
                 class="artist-name headline hover-artist"
+                id="little-jesus"
                 data-artist="LITTLE JESUS"
             >
                 LITTLE JESUS
@@ -125,6 +127,34 @@ const HeartSeparator = `
     import { getRandomDangoColor } from "../utils/colorUtils";
 
     document.addEventListener("astro:page-load", () => {
+        // Match EL BOGUETO width to LITTLE JESUS
+        const elBogueto = document.getElementById("el-bogueto");
+        const littleJesus = document.getElementById("little-jesus");
+
+        const adjustFont = () => {
+            if (!elBogueto || !littleJesus) return;
+
+            // Reset to original to measure correctly if resizing down
+            elBogueto.style.fontSize = "";
+
+            const targetWidth = littleJesus.getBoundingClientRect().width;
+            const currentWidth = elBogueto.getBoundingClientRect().width;
+
+            if (currentWidth === 0) return;
+
+            const currentFontSize = parseFloat(
+                window.getComputedStyle(elBogueto).fontSize,
+            );
+            const newFontSize = currentFontSize * (targetWidth / currentWidth);
+
+            elBogueto.style.fontSize = `${newFontSize}px`;
+        };
+
+        // Initial adjust
+        // Small timeout to ensure fonts are loaded/rendering
+        setTimeout(adjustFont, 50);
+        window.addEventListener("resize", adjustFont);
+
         // Random color hover for artists
         const artistLinks = document.querySelectorAll(".hover-artist");
         artistLinks.forEach((link) => {
