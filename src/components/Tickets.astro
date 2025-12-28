@@ -1,0 +1,114 @@
+<section id="boletos" class="tickets-section">
+    <div
+        class="container mx-auto px-4 h-full flex flex-col relative z-10 pt-20 pb-20 md:pb-0"
+    >
+        <!-- Title: Top Left -->
+        <div class="w-full text-left mb-12">
+            <h2 class="section-title">
+                ADQUIERE TUS <br />
+                <span class="text-white">BOLETOS</span>
+            </h2>
+        </div>
+
+        <!-- Images: Centered horizontally below title -->
+        <div
+            class="w-full flex flex-col md:flex-row justify-center items-center gap-6 flex-grow"
+        >
+            <!-- Placeholder 1 -->
+            <div class="ticket-placeholder">
+                <!-- Empty for now -->
+            </div>
+
+            <!-- Placeholder 2 -->
+            <div class="ticket-placeholder">
+                <!-- Empty for now -->
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.addEventListener("astro:page-load", () => {
+        const section = document.querySelector(".tickets-section");
+        const title = section?.querySelector(".section-title");
+        const placeholders = section?.querySelectorAll(".ticket-placeholder");
+
+        if (!section || !title || !placeholders) return;
+
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: section,
+                start: "top 80%", // Start when top of section hits 80% viewport height
+                toggleActions: "play none none reverse",
+            },
+        });
+
+        // Animate Title
+        tl.from(title, {
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out",
+        });
+
+        // Animate Placeholders (Staggered)
+        tl.from(
+            placeholders,
+            {
+                y: 100,
+                opacity: 0,
+                duration: 1,
+                stagger: 0.2,
+                ease: "power3.out",
+            },
+            "-=0.5", // Overlap with title animation
+        );
+    });
+</script>
+<style>
+    .tickets-section {
+        min-height: 100vh;
+        background-color: #000;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .section-title {
+        font-family: var(--font-kismis);
+        font-size: clamp(3rem, 8vw, 6rem);
+        line-height: 0.9;
+        color: var(--color-dango-cream);
+    }
+
+    .section-title span {
+        color: #fff;
+    }
+
+    /* Image Placeholders */
+    .ticket-placeholder {
+        width: 100%;
+        max-width: 350px;
+        aspect-ratio: 3/4;
+        background-color: #1a1a1a;
+        /* Borders removed */
+        position: relative;
+    }
+
+    .ticket-placeholder::after {
+        content: "Imagen";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #333;
+        font-family: var(--font-outfit);
+        text-transform: uppercase;
+        font-size: 1.5rem;
+    }
+</style>
