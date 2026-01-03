@@ -207,13 +207,7 @@ const HeartSeparator = `
             });
 
             link.addEventListener("mouseleave", () => {
-                // Keep Odisseo accent color if not hovered, otherwise white
-                if (link.classList.contains("accent-headline")) {
-                    (link as HTMLElement).style.color =
-                        "var(--color-dango-orange)";
-                } else {
-                    (link as HTMLElement).style.color = "";
-                }
+                (link as HTMLElement).style.color = "";
             });
         });
 
@@ -321,7 +315,7 @@ const HeartSeparator = `
 
     .accent-headline {
         font-size: 4rem; /* 80px */
-        color: var(--color-dango-orange);
+        color: #fff;
     }
 
     .mid {

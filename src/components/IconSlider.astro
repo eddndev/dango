@@ -117,19 +117,21 @@ const displayIcons = [...iconNames, ...iconNames, ...iconNames, ...iconNames];
     width: 100%;
     overflow: hidden;
     position: relative;
-    height: 60px;
+    height: 40px;
     background: transparent;
   }
 
   .slider-track {
     display: flex;
+    align-items: center;
     width: max-content;
     will-change: transform;
+    height: 100%;
   }
 
   .slider-item {
     flex-shrink: 0;
-    height: 30px; /* Consistently 40px height */
+    height: 40px; /* Consistent height */
     width: auto; /* Dynamic width */
     display: flex;
     align-items: center;

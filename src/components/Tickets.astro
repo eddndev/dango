@@ -1,3 +1,20 @@
+---
+import DangoLogo from "./DangoLogo.astro";
+
+const ticketOptions = [
+    {
+        image: "/images/boletos/arema.jpg",
+        label: "AREMA",
+        href: "https://arema.mx/e/16435/Festival-Dango-2026",
+    },
+    {
+        image: "/images/boletos/puntos_venta.jpg",
+        label: "PUNTOS DE VENTA",
+        href: "#", // Placeholder if no specific link
+    },
+];
+---
+
 <section id="boletos" class="tickets-section">
     <div
         class="container mx-auto px-4 h-full flex flex-col relative z-10 pt-20 pb-20 md:pb-0"
@@ -14,15 +31,38 @@
         <div
             class="w-full flex flex-col md:flex-row justify-center items-center gap-6 flex-grow"
         >
-            <!-- Placeholder 1 -->
-            <div class="ticket-placeholder">
-                <!-- Empty for now -->
-            </div>
+            {
+                ticketOptions.map((ticket) => (
+                    <a
+                        href={ticket.href}
+                        target={ticket.href.startsWith("http") ? "_blank" : "_self"}
+                        rel={ticket.href.startsWith("http") ? "noopener noreferrer" : ""}
+                        class="ticket-card group relative block overflow-hidden w-full max-w-[350px] aspect-[3/4]"
+                    >
+                        {/* Image */}
+                        <img
+                            src={ticket.image}
+                            alt={ticket.label}
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
 
-            <!-- Placeholder 2 -->
-            <div class="ticket-placeholder">
-                <!-- Empty for now -->
-            </div>
+                        {/* Dark Overlay (removes on hover) */}
+                        <div class="absolute inset-0 bg-black/40 transition-opacity duration-300 group-hover:opacity-0" />
+
+                        {/* Logo Top Left */}
+                        <div class="absolute top-6 left-6 w-16 text-white z-10 opacity-90">
+                            <DangoLogo />
+                        </div>
+
+                        {/* Text Bottom Left */}
+                        <div class="absolute bottom-6 left-6 z-10">
+                            <span class="text-white font-bold text-3xl font-outfit tracking-widest drop-shadow-lg">
+                                {ticket.label}
+                            </span>
+                        </div>
+                    </a>
+                ))
+            }
         </div>
     </div>
 </section>
@@ -35,14 +75,14 @@
     document.addEventListener("astro:page-load", () => {
         const section = document.querySelector(".tickets-section");
         const title = section?.querySelector(".section-title");
-        const placeholders = section?.querySelectorAll(".ticket-placeholder");
+        const cards = section?.querySelectorAll(".ticket-card");
 
-        if (!section || !title || !placeholders) return;
+        if (!section || !title || !cards) return;
 
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: section,
-                start: "top 80%", // Start when top of section hits 80% viewport height
+                start: "top 80%",
                 toggleActions: "play none none reverse",
             },
         });
@@ -55,9 +95,9 @@
             ease: "power3.out",
         });
 
-        // Animate Placeholders (Staggered)
+        // Animate Cards (Staggered)
         tl.from(
-            placeholders,
+            cards,
             {
                 y: 100,
                 opacity: 0,
@@ -65,7 +105,7 @@
                 stagger: 0.2,
                 ease: "power3.out",
             },
-            "-=0.5", // Overlap with title animation
+            "-=0.5",
         );
     });
 </script>
@@ -88,27 +128,5 @@
 
     .section-title span {
         color: #fff;
-    }
-
-    /* Image Placeholders */
-    .ticket-placeholder {
-        width: 100%;
-        max-width: 350px;
-        aspect-ratio: 3/4;
-        background-color: #1a1a1a;
-        /* Borders removed */
-        position: relative;
-    }
-
-    .ticket-placeholder::after {
-        content: "Imagen";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: #333;
-        font-family: var(--font-outfit);
-        text-transform: uppercase;
-        font-size: 1.5rem;
     }
 </style>
