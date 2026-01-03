@@ -10,29 +10,30 @@ const {
     secondaryLogo = "/images/logo-secundario.png",
     ticketsLink = "https://arema.mx/dango-festival",
 } = Astro.props;
+
+import DangoLogo from "./DangoLogo.astro";
 ---
 
 <div class="dual-logos-container">
     <div class="logos-wrapper">
         <!-- Primary Logo -->
-        <img
-            src={primaryLogo}
-            alt="Dängo Festival 2026 Logo Principal"
-            class="logo logo-primary"
-        />
+        <DangoLogo class="logo logo-primary text-white" />
 
         <!-- Secondary Logo with Link -->
         <a
             href={ticketsLink}
             target="_blank"
             rel="noopener noreferrer"
-            class="logo-secondary-link"
+            class="logo-secondary-link flex flex-col items-center gap-4 mt-8 group"
         >
-            <img
-                src={secondaryLogo}
-                alt="Compra Boletos"
-                class="logo logo-secondary"
+            <DangoLogo
+                class="w-32 md:w-48 text-white opacity-60 group-hover:opacity-100 transition-all duration-300"
             />
+            <span
+                class="text-white text-xl md:text-2xl font-bold tracking-[0.2em] opacity-80 group-hover:opacity-100 transition-all duration-300 font-outfit border border-white/30 px-6 py-2 rounded-full hover:bg-white/10"
+            >
+                COMPRA TUS BOLETOS
+            </span>
         </a>
     </div>
 </div>

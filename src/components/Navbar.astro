@@ -7,6 +7,8 @@ const navItems = [
     { id: "5_P", label: "PLAYLIST", href: "#playlist" },
     { id: "6_G", label: "GALERÍA", href: "#galeria" },
 ];
+
+import DangoLogo from "./DangoLogo.astro";
 ---
 
 <nav class="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-sm">
@@ -27,8 +29,8 @@ const navItems = [
         </div>
 
         <!-- Logo Center -->
-        <a href="#" class="logo-link hover-color-random">
-            <span class="text-2xl font-bold text-dango-pink">Dängo</span>
+        <a href="#" class="logo-link hover-color-random text-dango-pink">
+            <DangoLogo class="h-10 w-auto" />
         </a>
 
         <!-- Right Navigation (Desktop) -->
@@ -98,8 +100,10 @@ const navItems = [
         }
 
         <!-- Logo Footer -->
-        <div class="mobile-logo mt-8 opacity-0 text-center">
-            <span class="text-3xl font-bold text-dango-pink">Dängo</span>
+        <div class="mobile-logo mt-8 opacity-0 text-center flex flex-col items-center">
+            <div class="text-dango-pink mb-2">
+                <DangoLogo class="h-16 w-auto" />
+            </div>
             <p class="text-sm text-gray-500 mt-2">
                 Festival 2026 • Teotihuacán
             </p>
