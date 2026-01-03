@@ -5,6 +5,8 @@ dist/
 
 # dependencies
 node_modules/
+public/hot/
+raw_images/
 
 # logs
 npm-debug.log*

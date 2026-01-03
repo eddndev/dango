@@ -2,29 +2,28 @@
 interface Props {
     videoSrc?: string | null;
     backgroundImage?: string;
-    videoType?: "local" | "youtube" | "vimeo";
     overlay?: boolean;
     overlayOpacity?: number;
 }
 
 const {
     videoSrc = null,
-    backgroundImage = "/images/cover.jpg",
-    videoType = "local",
+    backgroundImage = "/images/ui/Fondo.webp",
     overlay = true,
-    overlayOpacity = 0.4,
+    overlayOpacity = 0.5
 } = Astro.props;
+
+// Simple check to see if it's a local file or external URL if we add youtube support later
+const videoType = videoSrc ? 'local' : 'none';
 ---
 
 <div class="video-background">
     {
         videoSrc ? (
-            videoType === "local" && (
-                <video autoplay muted loop playsinline class="video-bg">
-                    <source src={videoSrc} type="video/mp4" />
-                    Tu navegador no soporta el elemento de video.
-                </video>
-            )
+            <video autoplay muted loop playsinline class="video-bg">
+                <source src={videoSrc} type="video/mp4" />
+                Tu navegador no soporta el elemento de video.
+            </video>
         ) : (
             <div
                 class="video-bg bg-cover bg-center"
@@ -71,12 +70,9 @@ const {
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(
-            to bottom,
-            rgba(0, 0, 0, 0.3),
-            rgba(0, 0, 0, 0.7)
-        );
+        background: black; /* Base negra para el overlay */
         z-index: 1;
+        pointer-events: none;
     }
 
     .video-content {

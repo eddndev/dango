@@ -1,69 +1,55 @@
 ---
+import fs from 'node:fs';
+import path from 'node:path';
 
+const galleryPath = 'public/images/Galerias/Dango';
+let images: string[] = [];
+
+try {
+    const absolutePath = path.resolve(galleryPath);
+    if (fs.existsSync(absolutePath)) {
+        const files = fs.readdirSync(absolutePath);
+        images = files
+            .filter(file => /\.(webp|jpg|jpeg|png|gif)$/i.test(file))
+            .map(file => `/images/Galerias/Dango/${file}`);
+    }
+} catch (e) {
+    console.error(`Error leyendo galería:`, e);
+}
 ---
 
-<section id="galeria" class="gallery-section">
-    <!-- Fixed Title Banner -->
-    <div class="fixed-title z-30">
-        <h2 class="banner-text">GALERÍA</h2>
+<section id="galeria" class="gallery-section relative w-full h-screen bg-black overflow-hidden">
+    
+    <!-- Título Fijo -->
+    <div class="absolute top-[100px] left-0 z-20 bg-brand-purple px-6 py-2 rounded-r shadow-lg">
+        <h2 class="font-kismis text-white text-2xl tracking-widest uppercase">DANGO</h2>
     </div>
 
-    <!-- Horizontal Track -->
-    <div class="gallery-track flex flex-nowrap h-full">
-        <!-- Block 1: 6 Images (1 row, 6 cols) -->
-        <div class="gallery-block grid grid-cols-6">
+    <!-- Contenedor del Track (Centrado verticalmente) -->
+    <div class="w-full h-full flex items-center pt-[80px]"> <!-- pt-80px compensa navbar -->
+        
+        <!-- Track que se moverá -->
+        <div class="gallery-track flex gap-4 px-[10vw] w-max"> 
             {
-                Array.from({ length: 6 }).map((_, i) => (
-                    <div class="news-item">
-                        <div class="placeholder-img" />
-                    </div>
-                ))
+                images.length > 0 ? (
+                    images.map((imgSrc, index) => (
+                        <div class="gallery-item h-[60vh] aspect-[2/3] md:aspect-[3/4] flex-shrink-0 relative overflow-hidden rounded-sm group">
+                            <img 
+                                src={imgSrc} 
+                                alt={`Foto ${index}`} 
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
+                                loading="eager" 
+                            />
+                        </div>
+                    ))
+                ) : (
+                    <div class="text-white text-xl">Cargando Galería...</div>
+                )
             }
+             <!-- Buffer final -->
+             <div class="w-[20vw] flex-shrink-0"></div>
         </div>
 
-        <!-- Block 2: 5 Images (1 row, 5 cols) -->
-        <div class="gallery-block grid grid-cols-5">
-            {
-                Array.from({ length: 5 }).map((_, i) => (
-                    <div class="news-item">
-                        <div class="placeholder-img" />
-                    </div>
-                ))
-            }
-        </div>
-
-        <!-- Block 3: 4 Images (1 row, 4 cols) -->
-        <div class="gallery-block grid grid-cols-4">
-            {
-                Array.from({ length: 4 }).map((_, i) => (
-                    <div class="news-item">
-                        <div class="placeholder-img" />
-                    </div>
-                ))
-            }
-        </div>
-
-        <!-- Block 4: 3 + 3 Images (2 rows, 3 cols) -->
-        <div class="gallery-block grid grid-cols-3 grid-rows-2">
-            {
-                Array.from({ length: 6 }).map((_, i) => (
-                    <div class="news-item">
-                        <div class="placeholder-img" />
-                    </div>
-                ))
-            }
-        </div>
-
-        <!-- Block 5: 2 + 2 + 2 Images (3 rows, 2 cols) -->
-        <div class="gallery-block grid grid-cols-2 grid-rows-3">
-            {
-                Array.from({ length: 6 }).map((_, i) => (
-                    <div class="news-item">
-                        <div class="placeholder-img" />
-                    </div>
-                ))
-            }
-        </div>
     </div>
 </section>
 
@@ -73,96 +59,61 @@
 
     gsap.registerPlugin(ScrollTrigger);
 
-    document.addEventListener("astro:page-load", () => {
+    const initGallery = () => {
         const section = document.querySelector(".gallery-section");
-        const track = section?.querySelector(".gallery-track");
+        const track = document.querySelector(".gallery-track") as HTMLElement;
 
         if (!section || !track) return;
 
-        // Clean up internal items just in case (though scoped)
-        // Horizontal Scroll
-        // We want to pin the section and scroll the track to the left
-        // Total scroll distance = (track.width - viewport.width)
+        // Limpiar previos
+        ScrollTrigger.getAll().forEach(t => {
+            if (t.trigger === section) t.kill();
+        });
 
-        // We need to calculate this dynamically or force blocks to be 100vw
-        // Force blocks to 100vw ensures predictable math:
-        // 5 blocks = 500vw. We scroll 400vw.
-
+        // 1. Calcular ancho real del contenido
         const getScrollAmount = () => {
             return -(track.scrollWidth - window.innerWidth);
         };
 
-        const tweet = gsap.to(track, {
+        // 2. Crear animación
+        const tween = gsap.to(track, {
             x: getScrollAmount,
             ease: "none",
-            scrollTrigger: {
-                trigger: section,
-                start: "top top",
-                end: () => `+=${getScrollAmount() * -1}`, // Scroll distance equals horizontal width
-                pin: true,
-                scrub: 1,
-                invalidateOnRefresh: true,
-            },
+            duration: 1 // Dummy duration, controlado por scroll
         });
+
+        // 3. Crear Trigger
+        ScrollTrigger.create({
+            trigger: section,
+            start: "top top",
+            end: () => `+=${track.scrollWidth - window.innerWidth}`, 
+            pin: true,
+            animation: tween,
+            scrub: 1,
+            invalidateOnRefresh: true, // Recalcular si cambia tamaño ventana
+            anticipatePin: 1
+        });
+        
+        // Forzar refresco para que detecte el ancho correcto de las imágenes
+        ScrollTrigger.refresh();
+    };
+
+    // Inicializar en Astro Navigation
+    document.addEventListener("astro:page-load", initGallery);
+    
+    // Y también cuando todas las imágenes hayan cargado (CRUCIAL para cálculo de ancho)
+    window.addEventListener("load", () => {
+        ScrollTrigger.refresh();
     });
 </script>
 
 <style>
-    .gallery-section {
-        height: 100vh;
-        width: 100%;
-        background-color: #000;
-        overflow: hidden; /* Hide overflow for the pin */
-        position: relative;
-    }
-
-    .fixed-title {
-        position: absolute;
-        top: 2rem;
-        left: 0;
-        background-color: var(--color-dango-purple, #4b0082);
-        padding: 0.5rem 2rem;
-        border-radius: 0 4px 4px 0;
-    }
-
-    .banner-text {
-        font-family: var(
-            --font-outfit,
-            sans-serif
-        ); /* Or Kismis if appropriate, usually clean font for banner */
-        color: white;
-        font-weight: bold;
-        text-transform: uppercase;
-        font-size: 1.25rem;
-        margin: 0;
-    }
-
+    /* Asegurar que el track tome el ancho de su contenido */
     .gallery-track {
-        width: fit-content;
-        height: 100vh;
+        width: max-content;
     }
-
-    .gallery-block {
-        width: 100vw; /* Each block takes full viewport width */
-        height: 100vh;
-        border-right: 1px solid #111; /* Subtle separator */
-    }
-
-    .news-item {
-        position: relative;
-        overflow: hidden;
-        border: 1px solid #000; /* Grid separation */
-    }
-
-    .placeholder-img {
-        width: 100%;
-        height: 100%;
-        background-color: #222;
-        background-image: url('data:image/svg+xml,%3Csvg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%23333" fill-rule="evenodd"%3E%3Cpath d="M0 40L40 0H20L0 20M40 40V20L20 40"/%3E%3C/g%3E%3C/svg%3E');
-        transition: transform 0.3s ease;
-    }
-
-    .news-item:hover .placeholder-img {
-        transform: scale(1.05);
+    
+    .font-kismis {
+        font-family: var(--font-kismis, sans-serif);
     }
 </style>
