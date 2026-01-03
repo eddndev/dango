@@ -18,38 +18,54 @@ try {
 }
 ---
 
-<section id="galeria" class="gallery-section relative w-full h-screen bg-black overflow-hidden">
+<section id="galeria" class="gallery-section relative w-full h-screen bg-black overflow-hidden flex flex-col">
     
     <!-- Título Fijo -->
-    <div class="absolute top-[100px] left-0 z-20 bg-brand-purple px-6 py-2 rounded-r shadow-lg">
+    <div class="absolute top-[100px] left-0 z-20 bg-brand-purple px-6 py-2 rounded-r shadow-lg pointer-events-none">
         <h2 class="font-kismis text-white text-2xl tracking-widest uppercase">DANGO</h2>
     </div>
 
-    <!-- Contenedor del Track (Centrado verticalmente) -->
-    <div class="w-full h-full flex items-center pt-[80px]"> <!-- pt-80px compensa navbar -->
+    <!-- Contenedor Principal (Flex wrapper para centrar verticalmente si sobra espacio) -->
+    <div class="w-full h-full pt-[80px] pb-4 flex items-center overflow-hidden">
         
-        <!-- Track que se moverá -->
-        <div class="gallery-track flex gap-4 px-[10vw] w-max"> 
+        <!-- Track de Masonry Horizontal 
+             flex-col + flex-wrap: Los items se ordenan de arriba a abajo, y saltan a la derecha.
+             h-full: Obliga al wrap a ocurrir cuando se llena la pantalla verticalmente.
+        -->
+        <div class="gallery-track flex flex-col flex-wrap gap-2 h-full pl-[5vw] py-4"> 
             {
                 images.length > 0 ? (
                     images.map((imgSrc, index) => (
-                        <div class="gallery-item h-[60vh] aspect-[2/3] md:aspect-[3/4] flex-shrink-0 relative overflow-hidden rounded-sm group">
+                        <div class={`gallery-item relative overflow-hidden rounded-sm group
+                            ${index % 5 === 0 ? 'h-full md:w-auto' : ''} 
+                            ${index % 5 !== 0 ? 'h-[calc(50%-0.25rem)] md:h-[calc(50%-0.25rem)]' : ''}
+                        `}>
                             <img 
                                 src={imgSrc} 
                                 alt={`Foto ${index}`} 
-                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
+                                class="h-full w-auto max-w-none object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0 shadow-lg"
                                 loading="eager" 
                             />
                         </div>
                     ))
                 ) : (
-                    <div class="text-white text-xl">Cargando Galería...</div>
+                    <div class="text-white text-xl p-10">Cargando Galería...</div>
                 )
             }
-             <!-- Buffer final -->
-             <div class="w-[20vw] flex-shrink-0"></div>
+             <!-- Buffer final transparente para scroll suave -->
+             <div class="h-full w-[20vw] opacity-0 pointer-events-none"></div>
         </div>
+    </div>
 
+    <!-- LIGHTBOX MODAL -->
+    <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 backdrop-blur-sm">
+        <!-- Close Button -->
+        <button id="lightbox-close" class="absolute top-6 right-8 text-white text-5xl font-light hover:text-brand-purple transition-colors z-[101] focus:outline-none">&times;</button>
+        
+        <!-- Image Container -->
+        <div class="relative max-w-[95vw] max-h-[95vh]">
+            <img id="lightbox-img" src="" alt="Full view" class="max-w-full max-h-[90vh] object-contain shadow-2xl rounded-sm" />
+        </div>
     </div>
 </section>
 
@@ -63,26 +79,95 @@ try {
         const section = document.querySelector(".gallery-section");
         const track = document.querySelector(".gallery-track") as HTMLElement;
 
+        // Elementos del Lightbox
+        const lightbox = document.getElementById("lightbox");
+        const lightboxImg = document.getElementById("lightbox-img") as HTMLImageElement;
+        const closeBtn = document.getElementById("lightbox-close");
+        const galleryImages = document.querySelectorAll(".gallery-item img");
+
         if (!section || !track) return;
 
-        // Limpiar previos
+        // --- LÓGICA LIGHTBOX ---
+        
+        const openLightbox = (src: string) => {
+            if (!lightbox || !lightboxImg) return;
+            
+            lightboxImg.src = src;
+            
+            // Mostrar Modal
+            lightbox.classList.remove("pointer-events-none");
+            
+            // Animación de entrada
+            gsap.to(lightbox, { opacity: 1, duration: 0.3, ease: "power2.out" });
+            gsap.fromTo(lightboxImg, 
+                { scale: 0.9, opacity: 0 }, 
+                { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(1.2)" }
+            );
+
+            // Bloquear scroll (Nativo y Lenis)
+            document.body.style.overflow = "hidden";
+            window.lenis?.stop();
+        };
+
+        const closeLightbox = () => {
+            if (!lightbox) return;
+
+            // Animación de salida
+            gsap.to(lightbox, { 
+                opacity: 0, 
+                duration: 0.3, 
+                ease: "power2.in",
+                onComplete: () => {
+                    lightbox.classList.add("pointer-events-none");
+                    // Limpiar src para evitar flash al reabrir
+                    if(lightboxImg) lightboxImg.src = "";
+                }
+            });
+
+            // Restaurar scroll (Nativo y Lenis)
+            document.body.style.overflow = "";
+            window.lenis?.start();
+        };
+
+        // Event Listeners para las imágenes
+        galleryImages.forEach(img => {
+            img.addEventListener("click", (e) => {
+                const target = e.target as HTMLImageElement;
+                openLightbox(target.src);
+            });
+        });
+
+        // Event Listeners para cerrar
+        closeBtn?.addEventListener("click", closeLightbox);
+        
+        // Cerrar al hacer click fuera de la imagen (en el fondo)
+        lightbox?.addEventListener("click", (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
+        // Cerrar con tecla Escape
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") closeLightbox();
+        });
+
+        // --- FIN LÓGICA LIGHTBOX ---
+
+        // Limpiar triggers anteriores
         ScrollTrigger.getAll().forEach(t => {
             if (t.trigger === section) t.kill();
         });
 
-        // 1. Calcular ancho real del contenido
+        // IMPORTANTE: En flex-col wrap, el ancho total es scrollWidth
         const getScrollAmount = () => {
             return -(track.scrollWidth - window.innerWidth);
         };
 
-        // 2. Crear animación
         const tween = gsap.to(track, {
             x: getScrollAmount,
             ease: "none",
-            duration: 1 // Dummy duration, controlado por scroll
+            duration: 1
         });
 
-        // 3. Crear Trigger
         ScrollTrigger.create({
             trigger: section,
             start: "top top",
@@ -90,30 +175,40 @@ try {
             pin: true,
             animation: tween,
             scrub: 1,
-            invalidateOnRefresh: true, // Recalcular si cambia tamaño ventana
+            invalidateOnRefresh: true, 
             anticipatePin: 1
         });
         
-        // Forzar refresco para que detecte el ancho correcto de las imágenes
         ScrollTrigger.refresh();
     };
 
-    // Inicializar en Astro Navigation
     document.addEventListener("astro:page-load", initGallery);
-    
-    // Y también cuando todas las imágenes hayan cargado (CRUCIAL para cálculo de ancho)
-    window.addEventListener("load", () => {
-        ScrollTrigger.refresh();
-    });
+    window.addEventListener("load", () => ScrollTrigger.refresh());
 </script>
 
 <style>
-    /* Asegurar que el track tome el ancho de su contenido */
+    /* 
+       Truco crítico: Para que el width se calcule bien en horizontal
+       necesitamos que el contenedor no tenga límite de ancho.
+    */
     .gallery-track {
-        width: max-content;
+        width: max-content; /* Permite crecer infinitamente a la derecha */
+        max-height: 100%;   /* Respeta la altura del viewport */
     }
     
     .font-kismis {
         font-family: var(--font-kismis, sans-serif);
+    }
+    
+    /* Cursor pointer para indicar clickabilidad */
+    .gallery-item img {
+        cursor: pointer;
+    }
+
+    /* Ajuste fino para móviles */
+    @media (max-width: 768px) {
+        .gallery-item {
+            height: 80% !important; 
+        }
     }
 </style>
