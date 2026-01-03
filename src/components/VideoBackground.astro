@@ -1,13 +1,15 @@
 ---
 interface Props {
-    videoSrc?: string;
+    videoSrc?: string | null;
+    backgroundImage?: string;
     videoType?: "local" | "youtube" | "vimeo";
     overlay?: boolean;
     overlayOpacity?: number;
 }
 
 const {
-    videoSrc = "/videos/dango-bg.mp4",
+    videoSrc = null,
+    backgroundImage = "/images/cover.jpg",
     videoType = "local",
     overlay = true,
     overlayOpacity = 0.4,
@@ -16,11 +18,18 @@ const {
 
 <div class="video-background">
     {
-        videoType === "local" && (
-            <video autoplay muted loop playsinline class="video-bg">
-                <source src={videoSrc} type="video/mp4" />
-                Tu navegador no soporta el elemento de video.
-            </video>
+        videoSrc ? (
+            videoType === "local" && (
+                <video autoplay muted loop playsinline class="video-bg">
+                    <source src={videoSrc} type="video/mp4" />
+                    Tu navegador no soporta el elemento de video.
+                </video>
+            )
+        ) : (
+            <div
+                class="video-bg bg-cover bg-center"
+                style={`background-image: url(${backgroundImage})`}
+            />
         )
     }
 
