@@ -1,5 +1,36 @@
 ---
-
+const newsItems = [
+    {
+        image: "/images/ui/noticias/Line_Up.webp",
+        link: "https://www.instagram.com/p/DRctIzliHba/",
+        alt: "Line Up"
+    },
+    {
+        image: "/images/ui/noticias/Fan.webp",
+        link: "https://www.instagram.com/p/DP-Kz95DJUS/?img_index=1",
+        alt: "Fan"
+    },
+    {
+        image: "/images/ui/noticias/Artista.webp",
+        link: "https://www.instagram.com/p/DSbBXTNjaZT/",
+        alt: "Artista"
+    },
+    {
+        image: "/images/ui/noticias/Dango.webp",
+        link: "https://www.instagram.com/p/DR8JnKtDOi6/",
+        alt: "Dango"
+    },
+    {
+        image: "/images/ui/noticias/Boletoos.webp",
+        link: "https://www.instagram.com/p/DRx1cCnDA77/?img_index=2",
+        alt: "Boletos"
+    },
+    {
+        image: "/images/ui/noticias/Amor.webp",
+        link: "https://www.instagram.com/p/DRQ202qDPRA/",
+        alt: "Amor"
+    }
+];
 ---
 
 <section id="noticias" class="news-section">
@@ -18,7 +49,7 @@
         class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 w-full gap-0"
     >
         {
-            Array.from({ length: 6 }).map((_, i) => {
+            newsItems.map((item, i) => {
                 // Logic to hide orphans on specific breakpoints
                 // Item index 4 (5th item): Hide on md (4 cols) -> Show on lg (5 cols)
                 // Item index 5 (6th item): Hide on md (4 cols) & lg (5 cols) -> Show on xl (6 cols)
@@ -28,9 +59,19 @@
                     visibilityClass = "block md:hidden lg:hidden xl:block";
 
                 return (
-                    <div class={`news-item ${visibilityClass}`}>
-                        <div class="placeholder-img" />
-                    </div>
+                    <a 
+                        href={item.link} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        class={`news-item ${visibilityClass}`}
+                    >
+                        <img 
+                            src={item.image} 
+                            alt={item.alt} 
+                            class="news-img"
+                            loading="lazy"
+                        />
+                    </a>
                 );
             })
         }
@@ -63,30 +104,17 @@
         overflow: hidden;
         /* Border removed for seamless look or keep strictly if "instagram style" implies separation? "No debe haber gap" implies seamless */
         position: relative;
+        display: block;
     }
 
-    .placeholder-img {
+    .news-img {
         width: 100%;
         height: 100%;
-        background-color: #222;
-        background-image: url('data:image/svg+xml,%3Csvg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%23333" fill-rule="evenodd"%3E%3Cpath d="M0 40L40 0H20L0 20M40 40V20L20 40"/%3E%3C/g%3E%3C/svg%3E');
-        transition: transform 0.3s ease;
+        object-fit: cover;
+        transition: transform 0.5s ease;
     }
 
-    .news-item:hover .placeholder-img {
-        transform: scale(1.05);
-    }
-
-    /* Optional: Label for development visibility */
-    .news-item::after {
-        content: "Noticia";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: #555;
-        font-family: var(--font-outfit);
-        font-size: 1rem;
-        pointer-events: none;
+    .news-item:hover .news-img {
+        transform: scale(1.1);
     }
 </style>
