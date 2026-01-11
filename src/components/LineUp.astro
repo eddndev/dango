@@ -16,8 +16,18 @@ const HeartSeparator = `
         <IconSlider direction="right" />
     </div>
 
-    <!-- Rotating Background -->
+    <!-- Rotating Background (Base Layer) -->
     <RotatingBackground />
+
+    <!-- Artist Hover Background (Overlay Layer) -->
+    <div id="artist-bg-container" class="absolute inset-0 pointer-events-none z-0 opacity-0 transition-opacity duration-500 ease-in-out bg-black flex justify-center items-center overflow-hidden">
+        <img id="artist-bg-image" src="" alt="" class="h-full w-auto max-w-none object-contain brightness-50 scale-110 transition-transform duration-100 ease-out" />
+        
+        <!-- Masks -->
+        <div class="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-black via-black/50 to-transparent z-10"></div>
+        <div class="absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-black via-black/50 to-transparent z-10"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-90 z-10"></div>
+    </div>
 
     <!-- Hearts Container for floating animation -->
     <div class="hearts-container"></div>
@@ -33,6 +43,7 @@ const HeartSeparator = `
                 class="artist-name headline hover-artist"
                 id="el-bogueto"
                 data-artist="EL BOGUETO"
+                data-image="/images/artistas/bogueto.webp"
             >
                 EL BOGUETO
             </a>
@@ -43,6 +54,7 @@ const HeartSeparator = `
                 class="artist-name headline hover-artist"
                 id="little-jesus"
                 data-artist="LITTLE JESUS"
+                data-image="/images/artistas/Little.webp"
             >
                 LITTLE JESUS
             </a>
@@ -56,6 +68,7 @@ const HeartSeparator = `
                 rel="noopener noreferrer"
                 class="artist-name accent-headline hover-artist"
                 data-artist="ODISSEO"
+                data-image="/images/artistas/odiseeo.webp"
             >
                 ODISSEO
             </a>
@@ -69,7 +82,9 @@ const HeartSeparator = `
                     href="https://www.instagram.com/cachirulaa/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="artist-name mid hover-artist">CACHIRULA</a
+                    class="artist-name mid hover-artist"
+                    data-image="/images/artistas/Cachichi.webp"
+                >CACHIRULA</a
                 >
                 <span class="text-white" set:html={HeartSeparator} />
                 <span class="text-white" set:html={HeartSeparator} />
@@ -77,7 +92,9 @@ const HeartSeparator = `
                     href="https://www.instagram.com/kinkytheband/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="artist-name mid hover-artist">KINKY</a
+                    class="artist-name mid hover-artist"
+                    data-image="/images/artistas/kinky.webp"
+                >KINKY</a
                 >
             </div>
 
@@ -87,14 +104,18 @@ const HeartSeparator = `
                     href="https://www.instagram.com/loojanmusic/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="artist-name mid hover-artist">LOOJAN</a
+                    class="artist-name mid hover-artist"
+                    data-image="/images/artistas/Loojan.webp"
+                >LOOJAN</a
                 >
                 <span class="text-white" set:html={HeartSeparator} />
                 <a
                     href="https://www.instagram.com/javier_blake/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="artist-name mid hover-artist">JAVIER BLAKE</a
+                    class="artist-name mid hover-artist"
+                    data-image="/images/artistas/JavierBlake.webp"
+                >JAVIER BLAKE</a
                 >
             </div>
 
@@ -104,14 +125,18 @@ const HeartSeparator = `
                     href="https://www.instagram.com/yeyotqm/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="artist-name mid hover-artist">YEYO</a
+                    class="artist-name mid hover-artist"
+                    data-image="/images/artistas/Yeyo.webp"
+                >YEYO</a
                 >
                 <span class="text-white" set:html={HeartSeparator} />
                 <a
                     href="https://www.instagram.com/serenomorenito/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="artist-name mid hover-artist">DOONY GRAFF</a
+                    class="artist-name mid hover-artist"
+                    data-image="/images/artistas/DoonyGraff2.webp"
+                >DOONY GRAFF</a
                 >
             </div>
 
@@ -122,6 +147,7 @@ const HeartSeparator = `
                     target="_blank"
                     rel="noopener noreferrer"
                     class="artist-name small hover-artist"
+                    data-image="/images/artistas/Alanisyuki.webp"
                     >ALANIS YUKI</a
                 >
                 <span class="text-white" set:html={HeartSeparator} />
@@ -129,7 +155,9 @@ const HeartSeparator = `
                     href="https://www.instagram.com/plastikboy/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="artist-name small hover-artist">PLASTIKBOY</a
+                    class="artist-name small hover-artist"
+                    data-image="/images/artistas/Plastik.webp"
+                    >PLASTIKBOY</a
                 >
             </div>
         </div>
@@ -142,6 +170,7 @@ const HeartSeparator = `
                 rel="noopener noreferrer"
                 class="artist-name small hover-artist"
                 data-artist="DENNA LA PORRI"
+                data-image="/images/artistas/Denna.webp"
             >
                 DENNA LA PORRI
             </a>
@@ -174,6 +203,9 @@ const HeartSeparator = `
         // Match EL BOGUETO width to LITTLE JESUS
         const elBogueto = document.getElementById("el-bogueto");
         const littleJesus = document.getElementById("little-jesus");
+        const artistBgContainer = document.getElementById("artist-bg-container");
+        const artistBgImage = document.getElementById("artist-bg-image") as HTMLImageElement;
+        const lineupSection = document.getElementById("lineup");
 
         const adjustFont = () => {
             if (!elBogueto || !littleJesus) return;
@@ -199,37 +231,80 @@ const HeartSeparator = `
         setTimeout(adjustFont, 50);
         window.addEventListener("resize", adjustFont);
 
-        // Random color hover for artists
+        // --- ARTIST HOVER LOGIC ---
         const artistLinks = document.querySelectorAll(".hover-artist");
+        
+        // Preload images
+        artistLinks.forEach((link) => {
+            const imgUrl = link.getAttribute('data-image');
+            if (imgUrl) {
+                const img = new Image();
+                img.src = imgUrl;
+            }
+        });
+
         artistLinks.forEach((link) => {
             link.addEventListener("mouseenter", () => {
                 (link as HTMLElement).style.color = getRandomDangoColor();
+                
+                // Background Image Change
+                const imgUrl = link.getAttribute('data-image');
+                if (imgUrl && artistBgContainer && artistBgImage) {
+                    artistBgImage.src = imgUrl;
+                    artistBgContainer.classList.remove('opacity-0');
+                    artistBgContainer.classList.add('opacity-100');
+                }
+                
+                // Create a burst of hearts throughout the viewport
+                const heartsContainer = document.querySelector(".hearts-container");
+                if (heartsContainer) {
+                    for (let i = 0; i < 5; i++) {
+                        createRandomHeart(heartsContainer as HTMLElement);
+                    }
+                }
             });
 
             link.addEventListener("mouseleave", () => {
                 (link as HTMLElement).style.color = "";
-            });
-        });
-
-        // Hearts animation on artist hover
-        const heartsContainer = document.querySelector(".hearts-container");
-        artistLinks.forEach((link) => {
-            // Spawn hearts continuously while hovering or just a burst on enter
-            link.addEventListener("mouseenter", () => {
-                // Create a burst of hearts throughout the viewport
-                for (let i = 0; i < 5; i++) {
-                    createRandomHeart(heartsContainer as HTMLElement);
+                
+                // Hide Background
+                if (artistBgContainer) {
+                    artistBgContainer.classList.remove('opacity-100');
+                    artistBgContainer.classList.add('opacity-0');
                 }
             });
-
-            // Also add some random hearts while moving mouse over name
+            
+             // Also add some random hearts while moving mouse over name
             link.addEventListener("mousemove", () => {
                 if (Math.random() > 0.7) {
                     // Rate limiter
-                    createRandomHeart(heartsContainer as HTMLElement);
+                     const heartsContainer = document.querySelector(".hearts-container");
+                     if (heartsContainer) {
+                        createRandomHeart(heartsContainer as HTMLElement);
+                     }
                 }
             });
         });
+
+        // --- PARALLAX EFFECT ---
+        if (lineupSection && artistBgImage) {
+            lineupSection.addEventListener('mousemove', (e) => {
+                // Calculate mouse position relative to center
+                const x = (e.clientX / window.innerWidth - 0.5) * 2; // -1 to 1
+                const y = (e.clientY / window.innerHeight - 0.5) * 2; // -1 to 1
+
+                // Move image slightly in opposite direction
+                // We use transform directly for performance
+                // Note: We maintain scale-110 (from class) by adding it here or CSS handles it? 
+                // CSS transition handles smooth movement.
+                // We need to keep the scale.
+                
+                const moveX = -x * 20; // Move up to 20px
+                const moveY = -y * 20;
+                
+                artistBgImage.style.transform = `scale(1.1) translate(${moveX}px, ${moveY}px)`;
+            });
+        }
     });
 
     function createRandomHeart(container: HTMLElement) {
