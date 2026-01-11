@@ -7,6 +7,7 @@ import LineUp from "../components/LineUp.astro";
 import Tickets from "../components/Tickets.astro";
 import Gallery from "../components/Gallery.astro";
 import News from "../components/News.astro";
+import Info from "../components/Info.astro";
 ---
 
 <Layout title="Dängo Festival 2026 | Teotihuacán">
@@ -23,15 +24,75 @@ import News from "../components/News.astro";
 	<!-- 2_L Line Up -->
 	<LineUp />
 
+    <section id="ubicacion" class="bg-black">
+        <!-- Keep Ubicacion section separate or integrate? Request implies Info covers Location Q&A -->
+        <!-- But the nav says Ubicacion AND Info separately usually. 
+             Wait, the user text has "UBICACIÓN Y LLEGADA" inside the info text.
+             However, usually "Ubicacion" implies a map. 
+             The user asked to add the "section of information".
+             Let's see the current placeholder:
+             <section id="ubicacion" ...> ... </section>
+             
+             And the prompt says: "Falta la sección de información, tiene que tener estas preguntas..."
+             Looking at the nav: BOLETOS LINEUP UBICACIÓN INFORMACIÓN ...
+             
+             If I replace #ubicacion with this Info component (which contains Location Q&A), 
+             I might be removing the place for a future Map.
+             
+             However, the provided text starts with "UBICACIÓN Y LLEGADA".
+             
+             Let's ADD <Info /> after LineUp. 
+             But wait, looking at `src/pages/index.astro`, there is a placeholder for #ubicacion.
+             
+             The user prompt says "Falta la sección de información".
+             
+             I will add <Info /> where it logically belongs.
+             
+             If I look at the footer links: 
+             { label: "UBICACIÓN", href: "#ubicacion" },
+             { label: "INFORMACIÓN", href: "#informacion" },
+             
+             So they are distinct.
+             
+             The placeholder for #ubicacion is:
+             <section id="ubicacion" ...> <h2...>Ubicación</h2> <p...>Próximamente</p> </section>
+             
+             The placeholder for #informacion is... missing in the current file!
+             
+             Wait, let me read the file content again in my head (from previous turns).
+             Ah, I see `News` component.
+             
+             The current index.astro has:
+             Navbar
+             VideoBackground
+             Tickets (#boletos)
+             LineUp (#lineup)
+             #ubicacion placeholder
+             News
+             #playlist placeholder
+             Gallery
+             
+             It seems "Info" is missing entirely.
+             I will insert <Info /> AFTER #ubicacion placeholder and BEFORE News.
+             Or maybe after News.
+             
+             Let's put it after #ubicacion placeholder.
+             
+        -->
+    </section>
+
 	<section
 		id="ubicacion"
-		class="min-h-screen bg-black flex items-center justify-center"
+		class="min-h-[50vh] bg-black flex items-center justify-center border-t border-white/10"
 	>
 		<div class="container mx-auto px-4 py-20 text-center">
-			<h2 class="text-6xl font-bold text-white mb-4">Ubicación</h2>
-			<p class="text-xl text-gray-400">Próximamente</p>
+			<h2 class="text-6xl font-bold text-white mb-4 font-kismis">UBICACIÓN</h2>
+			<p class="text-xl text-gray-400 font-inter">Próximamente Mapa Oficial</p>
 		</div>
 	</section>
+
+    <!-- 4_I Información -->
+    <Info />
 
 	<News />
 

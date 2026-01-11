@@ -1,0 +1,106 @@
+[
+  {
+    "category": "UBICACIÓN Y LLEGADA",
+    "items": [
+      {
+        "question": "¿En dónde se realizará el festival?",
+        "answer": "El Festival Dängo tendrá lugar en el Rancho La Ventilla, ubicado en Teotihuacán, Estado de México. Es un espacio con una atmósfera cultural única, ideal para conectar con el entorno histórico de la zona."
+      },
+      {
+        "question": "¿Por dónde será el ingreso al evento?",
+        "answer": "El acceso principal para todos los asistentes será exclusivamente por la Puerta 3 del Rancho La Ventilla."
+      },
+      {
+        "question": "¿Cómo puedo llegar en auto o Uber?",
+        "answer": "Puedes navegar directamente hacia \"Rancho La Ventilla\" en aplicaciones como Google Maps o Waze. Asegúrate de dirigirte hacia la Puerta 3."
+      },
+      {
+        "question": "¿Cómo puedo llegar en transporte público?",
+        "answer": "Debes tomar un autobús con dirección a Teotihuacán desde la Terminal del Norte en la CDMX. Una vez en el centro de Teotihuacán, puedes llegar al Rancho caminando o mediante un taxi local o Uber."
+      },
+      {
+        "question": "¿Habrá estacionamiento en el lugar?",
+        "answer": "Sí, contamos con estacionamiento dentro del recinto con costo adicional. Te recomendamos llegar temprano ya que el cupo es limitado."
+      }
+    ]
+  },
+  {
+    "category": "BOLETOS Y PAGOS",
+    "items": [
+      {
+        "question": "¿Dónde puedo adquirir mis boletos?",
+        "answer": "La venta oficial es exclusivamente a través de la plataforma arema.mx o Puntos de Venta. <br><a href='https://www.instagram.com/p/DRx1cCnDA77/?img_index=2' target='_blank' rel='noopener noreferrer' class='text-dango-pink hover:text-white transition-colors underline decoration-dango-pink underline-offset-4'>Ver Puntos de Venta Oficiales</a>"
+      },
+      {
+        "question": "¿Qué tipos de boletos hay disponibles?",
+        "answer": "Para esta edición contamos únicamente con Acceso General, permitiendo que todos los asistentes disfruten de la experiencia completa por igual."
+      },
+      {
+        "question": "¿Puedo comprar boletos a meses sin intereses?",
+        "answer": "¡Sí! Tienes la opción de comprar tus boletos a 3 o 6 meses sin intereses directamente al realizar tu pago en la ticketera."
+      },
+      {
+        "question": "¿A partir de qué edad pagan boleto los niños?",
+        "answer": "El festival es para todas las edades. Los niños pagan boleto a partir de los 8 años cumplidos."
+      },
+      {
+        "question": "¿Qué pasa si pierdo mi boleto físico o digital?",
+        "answer": "Por políticas de seguridad y control, no existen reimpresiones ni reposiciones de boletos. Te sugerimos guardarlos en un lugar seguro."
+      },
+      {
+        "question": "¿Se van a agotar los boletos?",
+        "answer": "Existe una alta posibilidad de que se agoten pronto debido a la excelente respuesta que estamos recibiendo. Una vez agotados, no habrá más boletos a la venta, por lo que te sugerimos asegurar los tuyos lo antes posible."
+      }
+    ]
+  },
+  {
+    "category": "HORARIOS Y REGLAS",
+    "items": [
+      {
+        "question": "¿A qué hora es la apertura de puertas?",
+        "answer": "El acceso al recinto comenzará a partir de las 12:30 PM."
+      },
+      {
+        "question": "¿A qué hora termina el festival?",
+        "answer": "El cierre del evento está programado para las 2:00 AM."
+      },
+      {
+        "question": "¿Puedo entrar al festival en cualquier horario?",
+        "answer": "Podrás ingresar al festival como máximo hasta 3 horas antes de que inicie la última presentación del lineup."
+      },
+      {
+        "question": "¿Puedo salir del festival y volver a entrar?",
+        "answer": "No. Por seguridad de todos, los reingresos no están permitidos. Si sales del recinto, tu boleto perderá su validez y no podrás volver a entrar con él."
+      }
+    ]
+  },
+  {
+    "category": "SERVICIOS Y SEGURIDAD",
+    "items": [
+      {
+        "question": "¿Hay acceso y zonas para personas con discapacidad?",
+        "answer": "Sí, el festival cuenta con accesos y áreas designadas para personas con discapacidad para garantizar una experiencia cómoda."
+      },
+      {
+        "question": "¿Podré adquirir mercancía oficial durante el evento?",
+        "answer": "¡Claro! Tendremos un stand con el merchandising oficial de Dängo y de las bandas participantes para que no te quedes sin tu recuerdo."
+      },
+      {
+        "question": "¿Habrá opciones de comida y bebida?",
+        "answer": "Sí, contaremos con una amplia variedad gastronómica y de snacks."
+      },
+      {
+        "question": "¿Habrá venta de bebidas con alcohol?",
+        "answer": "Sí habrá venta de alcohol, pero únicamente para mayores de 18 años."
+      },
+      {
+        "question": "¿Habrá atención médica en el festival?",
+        "answer": "Sí, contaremos con personal de servicio médico capacitado y ambulancia disponible durante todo el evento para cualquier emergencia."
+      },
+      {
+        "question": "¿Cuáles son los protocolos de revisión a mi llegada?",
+        "answer": "Para seguridad de todos, se realizará una revisión obligatoria de pertenencias en la entrada. No se permite el ingreso de objetos punzocortantes, sustancias ilícitas o artículos prohibidos."
+      }
+    ]
+  }
+]
