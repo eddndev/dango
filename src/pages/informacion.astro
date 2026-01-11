@@ -1,0 +1,20 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import InfoComponent from "../components/Info.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout title="Información | Dängo Festival 2026">
+    <Navbar />
+    
+    <main class="pt-[80px]"> <!-- Add padding-top to account for fixed navbar -->
+        <InfoComponent />
+    </main>
+
+    <!-- Footer is already in Layout but often Layouts are structured differently. 
+         Let's check Layout.astro again. 
+         The user previously added Footer to Layout.astro. 
+         So I don't need to add it here explicitly if it's already in Layout.
+    -->
+</Layout>
