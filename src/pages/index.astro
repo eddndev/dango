@@ -8,6 +8,7 @@ import Tickets from "../components/Tickets.astro";
 import Gallery from "../components/Gallery.astro";
 import News from "../components/News.astro";
 import Location from "../components/Location.astro";
+import IconSlider from "../components/IconSlider.astro";
 ---
 
 <Layout title="Dängo Festival 2026 | Teotihuacán">
@@ -27,8 +28,14 @@ import Location from "../components/Location.astro";
     <!-- 3_U Ubicación -->
     <Location />
 
+    <!-- 3.5_S Slider Separator -->
+    <div class="py-4 bg-black overflow-hidden relative z-20">
+        <IconSlider direction="right" />
+    </div>
+
 	<News />
 
+    <!-- 
 	<section
 		id="playlist"
 		class="min-h-screen bg-black flex items-center justify-center"
@@ -38,6 +45,7 @@ import Location from "../components/Location.astro";
 			<p class="text-xl text-gray-400">Próximamente</p>
 		</div>
 	</section>
+    -->
 
 	<Gallery folder="Dango" title="DANGO" id="galeria-dango" />
     <Gallery folder="Ritual_Dango" title="RITUAL DANGO" id="galeria-ritual" />
