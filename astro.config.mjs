@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://dangofestival.com',
+    site: 'https://festivaldango.com',
     integrations: [sitemap()],
     vite: {
         plugins: [tailwindcss()],

@@ -11,7 +11,7 @@ interface Props {
 
 const { 
     title, 
-    description = "Festival Dängo 2026 en Teotihuacán. Música, arte y cultura en un escenario ancestral.",
+    description = "Festival Dängo 2026 en Teotihuacán. Boletos, Line Up y toda la información del festival de música y arte más místico de México.",
     image = "/images/ui/Fondo.webp"
 } = Astro.props;
 
@@ -51,6 +51,58 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
 		<ViewTransitions />
+
+        <!-- Schema.org Event Data -->
+        <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "MusicFestival",
+              "name": "Festival Dängo 2026",
+              "description": "Festival de música, arte y cultura en Teotihuacán. Donde el sonido ancestral encuentra el ritmo del futuro.",
+              "startDate": "2026-03-21T12:00:00-06:00",
+              "endDate": "2026-03-22T02:00:00-06:00",
+              "location": {
+                "@type": "Place",
+                "name": "Rancho La Ventilla",
+                "address": {
+                  "@type": "PostalAddress",
+                  "addressLocality": "Teotihuacán",
+                  "addressRegion": "Estado de México",
+                  "addressCountry": "MX"
+                },
+                "geo": {
+                  "@type": "GeoCoordinates",
+                  "latitude": 19.6833, 
+                  "longitude": -98.8500
+                }
+              },
+              "image": [
+                "https://festivaldango.com/images/ui/Fondo.webp",
+                "https://festivaldango.com/assets/cover.jpg"
+              ],
+              "organizer": {
+                "@type": "Organization",
+                "name": "Dängo Festival",
+                "url": "https://festivaldango.com"
+              },
+              "performer": [
+                { "@type": "MusicGroup", "name": "El Bogueto" },
+                { "@type": "MusicGroup", "name": "Little Jesus" },
+                { "@type": "MusicGroup", "name": "Odisseo" },
+                { "@type": "MusicGroup", "name": "Kinky" },
+                { "@type": "MusicGroup", "name": "Javier Blake" },
+                { "@type": "Person", "name": "Loojan" },
+                { "@type": "Person", "name": "Cachirula" }
+              ],
+              "offers": {
+                "@type": "Offer",
+                "url": "https://arema.mx/e/16435/Festival-Dango-2026",
+                "priceCurrency": "MXN",
+                "availability": "https://schema.org/InStock",
+                "validFrom": "2025-01-01"
+              }
+            }
+        </script>
 	</head>
 	<body class="min-h-screen">
 		<slot />
