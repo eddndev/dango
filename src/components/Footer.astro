@@ -96,8 +96,19 @@ const footerLinks = [
 
     <!-- Línea inferior -->
     <div class="border-t border-white/10 py-8">
-        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-400 font-inter tracking-wide text-center md:text-left">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-400 font-inter tracking-wide text-center md:text-left relative">
             <p>© {currentYear} Festival Dängo. Todos los derechos reservados.</p>
+            
+            <!-- Easter Egg -->
+            <a 
+                href="https://sylestudio.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="opacity-10 hover:opacity-100 transition-all duration-700 group"
+                aria-label="Syle Studio"
+            >
+                <img src="/images/ui/logo_syle.webp" alt="Syle Studio" class="h-6 w-auto" />
+            </a>
         </div>
     </div>
 </footer>
