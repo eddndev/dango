@@ -18,6 +18,21 @@ const ticketOptions = [
 ---
 
 <section id="boletos" class="tickets-section">
+    <!-- Background Decorativo (Lineas Topográficas abstractas) -->
+    <div class="absolute inset-0 opacity-50 pointer-events-none">
+        <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M0 100 C 20 0 50 0 100 100 Z" fill="none" stroke="url(#gradient-tickets)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
+            <path d="M0 100 C 30 20 70 20 100 100 Z" fill="none" stroke="url(#gradient-tickets)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
+            <path d="M0 100 C 40 40 60 40 100 100 Z" fill="none" stroke="url(#gradient-tickets)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
+            <defs>
+                <linearGradient id="gradient-tickets" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#8b5cf6" />
+                    <stop offset="100%" stop-color="#FF1493" />
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
+
     <div
         class="container mx-auto px-4 h-full flex flex-col relative z-10 pt-20 pb-20 md:pb-0"
     >

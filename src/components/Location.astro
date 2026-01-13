@@ -11,11 +11,11 @@ const googleMapsLink = "https://maps.app.goo.gl/U6Qg8WUuiFKTN9e5A";
     <!-- Background Decorativo (Lineas Topográficas abstractas) -->
     <div class="absolute inset-0 opacity-20 pointer-events-none">
         <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <path d="M0 100 C 20 0 50 0 100 100 Z" fill="none" stroke="url(#gradient)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
-            <path d="M0 100 C 30 20 70 20 100 100 Z" fill="none" stroke="url(#gradient)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
-            <path d="M0 100 C 40 40 60 40 100 100 Z" fill="none" stroke="url(#gradient)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
+            <path d="M0 100 C 20 0 50 0 100 100 Z" fill="none" stroke="url(#gradient-loc)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
+            <path d="M0 100 C 30 20 70 20 100 100 Z" fill="none" stroke="url(#gradient-loc)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
+            <path d="M0 100 C 40 40 60 40 100 100 Z" fill="none" stroke="url(#gradient-loc)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
             <defs>
-                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <linearGradient id="gradient-loc" x1="0%" y1="0%" x2="100%" y2="0%">
                     <stop offset="0%" stop-color="#8b5cf6" />
                     <stop offset="100%" stop-color="#FF1493" />
                 </linearGradient>
@@ -29,7 +29,7 @@ const googleMapsLink = "https://maps.app.goo.gl/U6Qg8WUuiFKTN9e5A";
             <!-- Texto / Info -->
             <div class="text-center lg:text-left space-y-8 order-2 lg:order-1">
                 <div>
-                    <span class="text-dango-pink font-outfit tracking-[0.2em] text-sm uppercase mb-2 block">Coordenadas Sagradas</span>
+                    <span class="text-dango-pink font-outfit tracking-[0.2em] text-sm uppercase mb-2 block">Ubicación</span>
                     <h2 class="font-kismis text-5xl md:text-7xl text-white leading-none mb-6">
                         RANCHO <br/>
                         <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-purple to-dango-pink">LA VENTILLA</span>
@@ -38,9 +38,9 @@ const googleMapsLink = "https://maps.app.goo.gl/U6Qg8WUuiFKTN9e5A";
                         Un espacio místico a las faldas de las pirámides. 
                         Donde la energía de Teotihuacán se encuentra con el sonido del futuro.
                     </p>
-                    <div class="flex flex-col gap-2 mt-4 text-sm text-gray-500 font-mono">
-                        <p>📍 Puerta 3, Rancho La Ventilla</p>
-                        <p>🗺️ Teotihuacán, Edo. Méx.</p>
+                    <div class="flex flex-col gap-2 mt-4 text-sm text-gray-500 font-inter">
+                        <p>Puerta 3, Rancho La Ventilla</p>
+                        <p>Teotihuacán, Edo. Méx.</p>
                     </div>
                 </div>
 

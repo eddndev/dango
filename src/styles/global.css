@@ -10,6 +10,34 @@
   font-display: swap;
 }
 
+/* Aloevera Font */
+@font-face {
+  font-family: 'Aloevera';
+  src: url('/fonts/AloeveraDisplay-Regular.otf') format('opentype'),
+    url('/fonts/AloeveraDisplay-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Aloevera';
+  src: url('/fonts/AloeveraDisplay-Medium.otf') format('opentype'),
+    url('/fonts/AloeveraDisplay-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Aloevera';
+  src: url('/fonts/AloeveraDisplay-SemiBold.otf') format('opentype'),
+    url('/fonts/AloeveraDisplay-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
   --color-brand-purple: #8b5cf6;
   --color-brand-dark: #0a0a0a;
@@ -26,6 +54,7 @@
   --color-dango-purple: #8b5cf6;
 
   --font-kismis: 'Kismis', sans-serif;
+  --font-aloevera: 'Aloevera', sans-serif;
   --font-inter: 'Inter', sans-serif;
   --font-outfit: 'Outfit', sans-serif;
 
@@ -72,4 +101,9 @@ body {
 .text-artist {
   font-family: var(--font-kismis);
   letter-spacing: 0.05em;
+}
+
+/* Aloevera Font Utilities */
+.font-aloevera {
+  font-family: var(--font-aloevera);
 }
