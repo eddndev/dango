@@ -12,7 +12,7 @@ interface Props {
 const { 
     title, 
     description = "Festival Dängo 2026 en Teotihuacán. Boletos, Line Up y toda la información del festival de música y arte más místico de México.",
-    image = "/images/ui/Fondo.webp"
+    image = "/cover.jpg"
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -77,8 +77,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
                 }
               },
               "image": [
-                "https://festivaldango.com/images/ui/Fondo.webp",
-                "https://festivaldango.com/assets/cover.jpg"
+                "https://festivaldango.com/cover.jpg",
+                "https://festivaldango.com/images/ui/Fondo.webp"
               ],
               "organizer": {
                 "@type": "Organization",
